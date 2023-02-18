@@ -6,5 +6,5 @@
 ```console
 cargo install cargo-watch
 cd api
-cargo watch -q -c -w src/ -x 'test -- --test-threads=1 --nocapture'
+cargo watch -q -c -w src/ -x 'run'
 ```
