@@ -15,16 +15,29 @@ impl Line {
     fn new() -> Line {
         Line {
             x: 0.,
-            speed: 100.,
+            speed: 300.,
         }
     }
 
     fn draw(&self) {
-        draw_line(
-            self.x, 0.,
-            self.x, screen_height(),
-            1.,
-            SELECTOR_COLOR);
+        let width = screen_width();
+        let step = 80.;
+        for i in 0..(width/ step) as i32 {
+            let mut x = self.x + i as f32 * step;
+            if x > width {
+                x -= width;
+            } else if x < 0. {
+                x += width;
+            } else {
+                x = x;
+            }
+            draw_line(
+                x, 0.,
+                x, screen_height(),
+                1.,
+                SELECTOR_COLOR);
+        }
+
     }
 
     fn update(&mut self, dt: f32) {
