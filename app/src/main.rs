@@ -10,6 +10,7 @@ use crate::settings::SELECTOR_COLOR;
 struct Line {
     x: f32,
     speed: f32,
+    step: f32,
 }
 
 impl Line {
@@ -17,14 +18,14 @@ impl Line {
         Line {
             x: 0.,
             speed: 300.,
+            step: 100.,
         }
     }
 
     fn draw(&self) {
         let width = screen_width();
-        let step = 80.;
-        for i in 0..(width/ step) as i32 {
-            let mut x = self.x + i as f32 * step;
+        for i in 0..(width/ self.step) as i32 {
+            let mut x = self.x + i as f32 * self.step;
             if x > width {
                 x -= width;
             } else if x < 0. {
