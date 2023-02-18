@@ -1,7 +1,8 @@
 use macroquad::prelude::*;
 mod settings;
 use settings::{
-    GROUND_COLOR
+    GROUND_COLOR,
+    LINE_COLOR,
 };
 use crate::settings::SELECTOR_COLOR;
 
@@ -35,7 +36,7 @@ impl Line {
                 x, 0.,
                 x, screen_height(),
                 1.,
-                SELECTOR_COLOR);
+                LINE_COLOR);
         }
 
     }
