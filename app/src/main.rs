@@ -3,7 +3,7 @@ mod settings;
 use settings::{
     GROUND_COLOR
 };
-
+use crate::settings::SELECTOR_COLOR;
 
 
 struct Line {
@@ -14,13 +14,17 @@ struct Line {
 impl Line {
     fn new() -> Line {
         Line {
-            x: screen_width() / 2.,
+            x: 0.,
             speed: 100.,
         }
     }
 
     fn draw(&self) {
-        draw_line(self.x, 0., self.x, screen_height(), 1., BLUE);
+        draw_line(
+            self.x, 0.,
+            self.x, screen_height(),
+            1.,
+            SELECTOR_COLOR);
     }
 
     fn update(&mut self, dt: f32) {
