@@ -15,3 +15,4 @@ pub const UNIT_SPEED: f32 = 130.0;
 pub const UNIT_ROTATION_SPEED: f32 = 4.0;
 
 pub const LINE_COLOR: Color = Color::new(0.8, 0.8, 0.8, 1.00);
+pub const TRANSPARENT: Color = Color::new(0., 0., 0., 0.);
