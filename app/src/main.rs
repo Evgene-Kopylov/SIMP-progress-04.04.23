@@ -7,16 +7,16 @@ use settings::{
 use crate::settings::{SELECTOR_COLOR, TRANSPARENT};
 
 
-struct Line {
+struct Camera {
     x: f32,
     speed: f32,
     step: f32,
     thickness: f32,
 }
 
-impl Line {
-    fn new() -> Line {
-        Line {
+impl Camera {
+    fn start() -> Camera {
+        Camera {
             x: 0.,
             speed: 300.,
             step: 100.,
@@ -24,7 +24,7 @@ impl Line {
         }
     }
 
-    fn draw(&self) {
+    fn draw_coordination_greed(&self) {
         let width = screen_width();
         for i in 0..(width/ self.step) as i32 {
             let mut x = self.x + i as f32 * self.step;
@@ -41,7 +41,9 @@ impl Line {
                 1.,
                 LINE_COLOR);
         }
+    }
 
+    fn draw_hexagon(&self) {
         draw_hexagon(
             300. * self.step * 0.01 + self.x, 200.,
             33. * self.step * 0.01,
@@ -50,7 +52,6 @@ impl Line {
             DARKGRAY,
             TRANSPARENT
         )
-
     }
 
     fn update(&mut self, dt: f32) {
@@ -81,15 +82,15 @@ impl Line {
 
 #[macroquad::main("breakout")]
 async fn main() {
-    let mut line = Line::new();
+    let mut line = Camera::start();
 
     loop {
         clear_background(GROUND_COLOR);
 
 
         line.update(get_frame_time());
-        line.draw();
-
+        line.draw_coordination_greed();
+        line.draw_hexagon();
 
         next_frame().await
     }
