@@ -4,13 +4,14 @@ use settings::{
     GROUND_COLOR,
     LINE_COLOR,
 };
-use crate::settings::SELECTOR_COLOR;
+use crate::settings::{SELECTOR_COLOR, TRANSPARENT};
 
 
 struct Line {
     x: f32,
     speed: f32,
     step: f32,
+    thickness: f32,
 }
 
 impl Line {
@@ -19,6 +20,7 @@ impl Line {
             x: 0.,
             speed: 300.,
             step: 100.,
+            thickness: 1.,
         }
     }
 
@@ -40,6 +42,15 @@ impl Line {
                 LINE_COLOR);
         }
 
+        draw_hexagon(
+            300. * self.step * 0.01 + self.x, 200.,
+            33. * self.step * 0.01,
+            1.,
+            true,
+            DARKGRAY,
+            TRANSPARENT
+        )
+
     }
 
     fn update(&mut self, dt: f32) {
@@ -50,6 +61,17 @@ impl Line {
         if is_key_down(KeyCode::Right) {
             self.x += dt * self.speed;
         }
+
+        let mw = mouse_wheel().1;
+        if mw != 0. {
+            println!("{}", mw);
+            self.step += mw * 0.01 * 0.01 * self.speed ;
+            let min_step = 16. * self.thickness;
+            if self.step <= min_step {
+                self.step = min_step;
+            }
+        }
+
     }
 
 
