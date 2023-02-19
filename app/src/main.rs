@@ -25,16 +25,16 @@ impl Camera {
     }
 
     fn draw_coordination_greed(&self) {
-        let width = screen_width();
-        for i in 0..(width/ self.step) as i32 {
+        let range = screen_width() / self.step;
+        for i in 0..=range as i32 {
             let mut x = self.x + i as f32 * self.step;
-            if x > width {
-                x -= width;
-            } else if x < 0. {
-                x += width;
-            } else {
-                x = x;
+            while x < 0. {
+                x += screen_width();
             }
+            while x > screen_width() {
+                x -= screen_width();
+            }
+
             draw_line(
                 x, 0.,
                 x, screen_height(),
@@ -72,6 +72,11 @@ impl Camera {
                 self.step = min_step;
             }
         }
+
+        // if is_key_down(KeyCode::Space) {
+        //
+        //     println!("{}", mouse_position().0);
+        // }
 
     }
 
