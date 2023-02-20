@@ -27,7 +27,6 @@ impl Camera {
 
     fn draw_coordination_greed(&self) {
         let mut range = ((screen_width() + self.x.abs()) / self.step) as i32;
-        // let mut range_0 = (screen_width() - self.x.abs()) / self.step;
         for i in -range..=range {
             let mut x = (i as f32) * self.step + self.x;
             if x > 0. && x < screen_width() {
@@ -64,10 +63,12 @@ impl Camera {
         if mw != 0. {
             println!("{}", mw);
             let dmw = mw * 0.01 * 0.01 * self.speed;
-            self.step += dmw;
+
+
             let min_step = 16. * self.thickness;
-            if self.step <= min_step {
-                self.step = min_step;
+            if self.step + dmw >= min_step {
+                self.step += dmw;
+                self.x -= (screen_width() / 2.) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
             }
         }
 
