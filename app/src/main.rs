@@ -1,3 +1,4 @@
+// use std::slice::range;
 use macroquad::prelude::*;
 mod settings;
 use settings::{
@@ -25,21 +26,17 @@ impl Camera {
     }
 
     fn draw_coordination_greed(&self) {
-        let range = screen_width() / self.step;
-        for i in 0..=range as i32 {
-            let mut x = self.x + i as f32 * self.step;
-            while x < 0. {
-                x += screen_width();
+        let mut range = ((screen_width() + self.x.abs()) / self.step) as i32;
+        // let mut range_0 = (screen_width() - self.x.abs()) / self.step;
+        for i in -range..=range {
+            let mut x = (i as f32) * self.step + self.x;
+            if x > 0. && x < screen_width() {
+                draw_line(
+                    x, 0.,
+                    x, screen_height(),
+                    1.,
+                    LINE_COLOR);
             }
-            while x > screen_width() {
-                x -= screen_width();
-            }
-
-            draw_line(
-                x, 0.,
-                x, screen_height(),
-                1.,
-                LINE_COLOR);
         }
     }
 
@@ -66,17 +63,13 @@ impl Camera {
         let mw = mouse_wheel().1;
         if mw != 0. {
             println!("{}", mw);
-            self.step += mw * 0.01 * 0.01 * self.speed ;
+            let dmw = mw * 0.01 * 0.01 * self.speed;
+            self.step += dmw;
             let min_step = 16. * self.thickness;
             if self.step <= min_step {
                 self.step = min_step;
             }
         }
-
-        // if is_key_down(KeyCode::Space) {
-        //
-        //     println!("{}", mouse_position().0);
-        // }
 
     }
 
