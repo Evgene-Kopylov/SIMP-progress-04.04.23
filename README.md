@@ -5,6 +5,6 @@
 Отслеживать изменения и при сохранении запускать тесты.
 ```console
 cargo install cargo-watch
-cd api
-cargo watch -q -c -w src/ -x 'run'
+cd app
+cargo watch -x run
 ```
