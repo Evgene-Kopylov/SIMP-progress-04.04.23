@@ -94,6 +94,14 @@ impl Camera {
 
             let min_step = 16. * self.thickness;
             if self.step + dmw >= min_step {
+                let x = mouse_position().0 - self.x;
+                let dx = x * (self.step + dmw) / self.step - x;
+                self.x -= dx;
+
+                let y = mouse_position().1 - self.y;
+                let dy = y * (self.step + dmw) / self.step - y;
+                self.y -= dy;
+
                 self.step += dmw;
             }
         }
@@ -111,7 +119,6 @@ async fn main() {
 
     loop {
         clear_background(GROUND_COLOR);
-
 
         line.update(get_frame_time());
         line.draw_coordination_greed();
