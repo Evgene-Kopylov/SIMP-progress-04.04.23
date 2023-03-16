@@ -1,4 +1,3 @@
-// use std::slice::range;
 use macroquad::prelude::*;
 mod settings;
 use settings::{
@@ -92,7 +91,8 @@ impl Camera {
             let min_step = 16. * self.thickness;
             if self.step + dmw >= min_step {
                 self.step += dmw;
-                self.x -= (screen_width() / 2.) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
+                self.x -= (mouse_position().0) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
+                self.y -= (mouse_position().1) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
             }
         }
 
