@@ -95,8 +95,6 @@ impl Camera {
             let min_step = 16. * self.thickness;
             if self.step + dmw >= min_step {
                 self.step += dmw;
-                self.x -= (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
-                self.y -= (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
             }
         }
 
