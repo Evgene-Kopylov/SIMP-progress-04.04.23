@@ -54,9 +54,13 @@ impl Camera {
     }
 
     fn draw_hexagon(&self) {
+        let pos: Vec2 = Vec2::new(
+            200. * self.step * 0.01,
+            300. * self.step * 0.01
+        );
         draw_hexagon(
-            300. * self.step * 0.01 + self.x,
-            300. * self.step * 0.01 + self.y,
+            pos.x + self.x,
+            pos.y + self.y,
             self.step,
             1.,
             true,
@@ -91,8 +95,8 @@ impl Camera {
             let min_step = 16. * self.thickness;
             if self.step + dmw >= min_step {
                 self.step += dmw;
-                self.x -= (mouse_position().0) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
-                self.y -= (mouse_position().1) * (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
+                self.x -= (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
+                self.y -= (0.01 * 0.01 * self.speed) * (mw.abs()/mw) ;
             }
         }
 
