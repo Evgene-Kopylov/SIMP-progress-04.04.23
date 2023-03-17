@@ -13,6 +13,7 @@ struct Camera {
     speed: f32,
     step: f32,
     thickness: f32,
+    prev_mouse_position: (f32, f32),
 }
 
 impl Camera {
@@ -23,6 +24,7 @@ impl Camera {
             speed: 500.,
             step: 100.,
             thickness: 1.,
+            prev_mouse_position: (0., 0.),
         }
     }
 
@@ -70,6 +72,12 @@ impl Camera {
     }
 
     fn update(&mut self, dt: f32) {
+        if is_mouse_button_down(MouseButton::Middle) {
+            self.x += mouse_position().0 - self.prev_mouse_position.0;
+            self.y += mouse_position().1 - self.prev_mouse_position.1;
+        }
+        self.prev_mouse_position = mouse_position();
+
         if is_key_down(KeyCode::Left) || is_key_down(KeyCode::A) {
             self.x -= dt * self.speed;
         }
