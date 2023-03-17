@@ -42,7 +42,7 @@ impl Camera {
         let mut range_y = ((screen_height() + self.y.abs()) / self.step) as i32;
         for i in -range_y..=range_y {
             let mut y = (i as f32) * self.step + self.y;
-            if y > 0. && y < screen_width() {
+            if y > 0. && y < screen_height() {
                 draw_line(
                     0.,y,
                     screen_width(),y,
@@ -88,7 +88,7 @@ impl Camera {
 
         let mw = mouse_wheel().1;
         if mw != 0. {
-            println!("{}", mw);
+            // println!("{}", mw);
             let dmw = mw * 0.01 * 0.01 * self.speed;
 
 
