@@ -50,13 +50,13 @@ impl Camera {
                     LINE_COLOR);
             }
         }
-
     }
 
     fn draw_hexagon(&self) {
+        let initial_position: Vec2 = Vec2::new(200., 300.);
         let pos: Vec2 = Vec2::new(
-            200. * self.step * 0.01,
-            300. * self.step * 0.01
+            initial_position.x * self.step * 0.01,
+            initial_position.y * self.step * 0.01
         );
         draw_hexagon(
             pos.x + self.x,
@@ -88,12 +88,10 @@ impl Camera {
 
         let mw = mouse_wheel().1;
         if mw != 0. {
-            // println!("{}", mw);
-            let dmw = mw * 0.01 * 0.01 * self.speed;
+                let dmw = mw * 0.01 * 0.01 * self.speed;
 
-
-            let min_step = 16. * self.thickness;
-            if self.step + dmw >= min_step {
+                let min_step = 16. * self.thickness;
+                if self.step + dmw >= min_step {
                 let x = mouse_position().0 - self.x;
                 let dx = x * (self.step + dmw) / self.step - x;
                 self.x -= dx;
@@ -105,10 +103,7 @@ impl Camera {
                 self.step += dmw;
             }
         }
-
     }
-
-
 }
 
 
