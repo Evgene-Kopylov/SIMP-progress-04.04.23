@@ -20,7 +20,7 @@ impl Camera {
         Camera {
             x: 0.,
             y: 0.,
-            speed: 300.,
+            speed: 500.,
             step: 100.,
             thickness: 1.,
         }
@@ -70,19 +70,19 @@ impl Camera {
     }
 
     fn update(&mut self, dt: f32) {
-        if is_key_down(KeyCode::Left) {
+        if is_key_down(KeyCode::Left) || is_key_down(KeyCode::A) {
             self.x -= dt * self.speed;
         }
 
-        if is_key_down(KeyCode::Right) {
+        if is_key_down(KeyCode::Right) || is_key_down(KeyCode::D) {
             self.x += dt * self.speed;
         }
 
-        if is_key_down(KeyCode::Up) {
+        if is_key_down(KeyCode::Up) || is_key_down(KeyCode::W) {
             self.y -= dt * self.speed;
         }
 
-        if is_key_down(KeyCode::Down) {
+        if is_key_down(KeyCode::Down) || is_key_down(KeyCode::S) {
             self.y += dt * self.speed;
         }
 
