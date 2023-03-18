@@ -1,3 +1,4 @@
+#![allow(unused)]  // FIXME
 use macroquad::color::GRAY;
 use macroquad::prelude::{
     YELLOW,
