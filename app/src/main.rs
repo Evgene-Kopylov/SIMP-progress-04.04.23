@@ -54,15 +54,9 @@ impl Unit {
         if self.rect.x < 1f32 {
             x_move = 1f32;
         }
-        if self.rect.x > screen_width() - self.rect.w {
-            x_move = -1f32;
-        }
 
         if self.rect.y < 1f32 {
             y_move = 1f32;
-        }
-        if self.rect.y > screen_height() - self.rect.h {
-            y_move = -1f32;
         }
 
         self.rect.x += x_move * dt * UNIT_SPEED;
@@ -72,8 +66,8 @@ impl Unit {
 
     pub fn draw(&self) {
         draw_rectangle(
-            self.rect.x + self.d.x,
-            self.rect.y + self.d.y,
+            self.rect.x * self.zoom + self.d.x,
+            self.rect.y * self.zoom + self.d.y,
             self.rect.w * self.zoom,
             self.rect.h * self.zoom,
             UNIT_COLOR

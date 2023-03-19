@@ -8,6 +8,7 @@ pub struct Camera {
     x: f32,
     y: f32,
     speed: f32,
+    step: f32,
     zoom: f32,
     thickness: f32,
     prev_mouse_position: (f32, f32),
@@ -19,16 +20,17 @@ impl Camera {
             x: 0.,
             y: 0.,
             speed: 500.,
-            zoom: 100.,
+            step: 100.,
+            zoom: 1.,
             thickness: 1.,
             prev_mouse_position: (0., 0.),
         }
     }
 
     pub fn draw_coordination_greed(&self) {
-        let range_x = ((screen_width() + self.x.abs()) / self.zoom) as i32;
+        let range_x = ((screen_width() + self.x.abs()) / (self.step * self.zoom)) as i32;
         for i in -range_x..=range_x {
-            let x = (i as f32) * self.zoom + self.x;
+            let x = (i as f32) * (self.step * self.zoom) + self.x;
             if x > 0. && x < screen_width() {
                 draw_line(
                     x, 0.,
@@ -38,9 +40,9 @@ impl Camera {
             }
         }
 
-        let range_y = ((screen_height() + self.y.abs()) / self.zoom) as i32;
+        let range_y = ((screen_height() + self.y.abs()) / (self.step * self.zoom)) as i32;
         for i in -range_y..=range_y {
-            let y = (i as f32) * self.zoom + self.y;
+            let y = (i as f32) * (self.step * self.zoom) + self.y;
             if y > 0. && y < screen_height() {
                 draw_line(
                     0.,y,
@@ -54,13 +56,13 @@ impl Camera {
     pub fn draw_hexagon(&self) {
         let initial_position: Vec2 = Vec2::new(200., 300.);
         let pos: Vec2 = Vec2::new(
-            initial_position.x * self.zoom * 0.01,
-            initial_position.y * self.zoom * 0.01
+            initial_position.x * self.zoom,
+            initial_position.y * self.zoom
         );
         draw_hexagon(
             pos.x + self.x,
             pos.y + self.y,
-            self.zoom,
+            100. * self.zoom,
             1.,
             true,
             DARKGRAY,
@@ -95,19 +97,18 @@ impl Camera {
         if mw != 0. {
             let dmw = mw * 0.01 * 0.01 * self.speed;
 
-            let min_step = 16. * self.thickness;
-            if self.zoom + dmw >= min_step {
+            if self.zoom >= 0.1 || dmw > 0. {
+                self.zoom += dmw / 100.;
+
                 let x = mouse_position().0 - self.x;
-                let dx = x * (self.zoom + dmw) / self.zoom - x;
+                let dx = x * ((self.step * self.zoom) + dmw) / (self.step * self.zoom) - x;
                 self.x -= dx;
 
                 let y = mouse_position().1 - self.y;
-                let dy = y * (self.zoom + dmw) / self.zoom - y;
+                let dy = y * ((self.step * self.zoom) + dmw) / (self.step * self.zoom) - y;
                 self.y -= dy;
-
-                self.zoom += dmw;
             }
         }
-        (Vec2::new(self.x, self.y), self.zoom / 100.)
+        (Vec2::new(self.x, self.y), self.zoom)
     }
 }
