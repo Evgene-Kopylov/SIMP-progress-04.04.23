@@ -1,28 +1,53 @@
 use macroquad::prelude::*;
 mod settings;
 mod camera;
-mod unit;
+mod dark_grey_rectangle;
+mod selectable_unit;
 
 use crate::settings::{GROUND_COLOR, UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 use crate::camera::Camera;
-use crate::unit::Unit;
+use crate::dark_grey_rectangle::DarkGrayRectangle;
+use crate::selectable_unit::SelectableUnit;
+use crate::selectable_unit::SelectorFrame;
 
 
 #[macroquad::main("breakout")]
 async fn main() {
     let mut camera = Camera::start();
-    let mut unit = Unit::new();
+    let mut dark_gray_rectangle = DarkGrayRectangle::new();
+    let texture: Texture2D = load_texture("../assets/path3333.png").await.unwrap();
+    let mut selectable_unit = SelectableUnit::new();
+    let mut selector_frame = SelectorFrame::new();
 
 
     loop {
         clear_background(GROUND_COLOR);
 
-        let (d, zoom) = camera.update(get_frame_time());
+        // --------------------------------
+        let dt = get_frame_time();
+
+        let (d, zoom) = camera.update(dt);
         camera.draw_coordination_greed();
         camera.draw_hexagon();
 
-        unit.update(get_frame_time(), d, zoom);
-        unit.draw();
+        // --------------------------------
+
+        dark_gray_rectangle.update(dt, d, zoom);
+        dark_gray_rectangle.draw();
+
+        // --------------------------------
+
+        let mouse_position: Vec2 = mouse_position().into();
+        selectable_unit.update(dt, mouse_position);
+
+        if selectable_unit.selected {
+            selectable_unit.draw_collision();
+            selectable_unit.draw_path(dt)
+        }
+        selectable_unit.draw(texture);
+        selector_frame.update(mouse_position, &mut selectable_unit);
+
+        // --------------------------------
 
         next_frame().await
     }

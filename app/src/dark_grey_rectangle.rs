@@ -2,13 +2,13 @@ use macroquad::prelude::*;
 
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 
-pub struct Unit {
+pub struct DarkGrayRectangle {
     rect: Rect,
     d: Vec2,
     zoom: f32,
 }
 
-impl Unit {
+impl DarkGrayRectangle {
     pub fn new() -> Self {
         Self {
             rect: Rect::new(
