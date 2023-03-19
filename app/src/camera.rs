@@ -98,8 +98,6 @@ impl Camera {
             let dmw = mw * 0.01 * 0.01 * self.speed;
 
             if self.zoom >= 0.1 || dmw > 0. {
-                self.zoom += dmw / 100.;
-
                 let x = mouse_position().0 - self.x;
                 let dx = x * ((self.step * self.zoom) + dmw) / (self.step * self.zoom) - x;
                 self.x -= dx;
@@ -107,6 +105,8 @@ impl Camera {
                 let y = mouse_position().1 - self.y;
                 let dy = y * ((self.step * self.zoom) + dmw) / (self.step * self.zoom) - y;
                 self.y -= dy;
+
+                self.zoom += dmw / 100.;
             }
         }
         (Vec2::new(self.x, self.y), self.zoom)
