@@ -10,7 +10,6 @@ pub struct Camera {
     speed: f32,
     step: f32,
     zoom: f32,
-    thickness: f32,
     prev_mouse_position: (f32, f32),
 }
 
@@ -22,7 +21,6 @@ impl Camera {
             speed: 500.,
             step: 100.,
             zoom: 1.,
-            thickness: 1.,
             prev_mouse_position: (0., 0.),
         }
     }
