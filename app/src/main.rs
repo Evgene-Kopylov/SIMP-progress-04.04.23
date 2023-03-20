@@ -26,19 +26,19 @@ async fn main() {
         // --------------------------------
         let dt = get_frame_time();
 
-        let (d, zoom) = camera.update(dt);
+        let (camera_move, zoom) = camera.update(dt);
         camera.draw_coordination_greed();
         camera.draw_hexagon();
 
         // --------------------------------
 
-        dark_gray_rectangle.update(dt, d, zoom);
+        dark_gray_rectangle.update(dt, camera_move, zoom);
         dark_gray_rectangle.draw();
 
         // --------------------------------
 
         let mouse_position: Vec2 = mouse_position().into();
-        selectable_unit.update(dt, mouse_position);
+        selectable_unit.update(dt);
 
         if selectable_unit.selected {
             selectable_unit.draw_collision();

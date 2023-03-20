@@ -85,14 +85,14 @@ impl SelectableUnit {
         }
     }
 
-    pub fn update(&mut self, dt: f32, mouse_position: Vec2) {
+    pub fn update(&mut self, dt: f32) {
         // указание цели мышкой
         if self.selected && is_mouse_button_released(MouseButton::Right) {
             if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::LeftControl) {
-                self.order.push(mouse_position);
+                self.order.push(mouse_position().into());
             } else {
                 self.order.clear();
-                self.order.push(mouse_position);
+                self.order.push(mouse_position().into());
             }
         }
 
