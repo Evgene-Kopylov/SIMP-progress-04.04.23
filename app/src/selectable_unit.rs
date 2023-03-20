@@ -61,7 +61,7 @@ impl SelectorFrame {
         if is_mouse_button_pressed(MouseButton::Left) {
             if
             (mouse_position.x - unit.collision.x).powf(2f32) +
-                (mouse_position.y - unit.collision.y).powf(2f32) < (UNIT_SIZE.y / 2.).powf(2f32)
+                (mouse_position.y - unit.collision.y).powf(2f32) < (UNIT_SIZE / 2.).powf(2f32)
             {
                 unit.selected = true;
             }
@@ -77,7 +77,7 @@ impl SelectableUnit {
             collision: Circle::new(
                 screen_width() * 0.5,
                 screen_height() * 0.5,
-                UNIT_SIZE.y / 2.
+                UNIT_SIZE / 2.
             ),
             rotation: f32::to_radians(90.0),
             order: Vec::new(),
@@ -108,13 +108,13 @@ impl SelectableUnit {
         if self.collision.y < 1f32 {
             self.collision.y += 1f32;
         }
-        if self.collision.y > screen_height() - UNIT_SIZE.y {
+        if self.collision.y > screen_height() - UNIT_SIZE {
             self.collision.y -= 1f32;
         }
         if self.collision.x < 1f32 {
             self.collision.x += 1f32;
         }
-        if self.collision.x > screen_width() - UNIT_SIZE.y {
+        if self.collision.x > screen_width() - UNIT_SIZE {
             self.collision.x -= 1f32;
         }
 
@@ -135,7 +135,7 @@ impl SelectableUnit {
             }
 
             // останавливаться перед целью
-            if dx.powf(2f32) + dy.powf(2f32) < (UNIT_SIZE.y / 2.).powf(2f32) {
+            if dx.powf(2f32) + dy.powf(2f32) < (UNIT_SIZE / 2.).powf(2f32) {
                 y_move = 0f32;
                 self.order.remove(0);
             }
@@ -205,13 +205,14 @@ impl SelectableUnit {
     }
 
     pub fn draw(&self, texture: Texture2D) {
+        let d = 0.8; // соотношение сторон
         draw_texture_ex(
             texture,
-            self.collision.x - UNIT_SIZE.x * 0.5,
-            self.collision.y - UNIT_SIZE.y * 0.5,
+            self.collision.x - UNIT_SIZE * d * 0.5,
+            self.collision.y - UNIT_SIZE * 0.5,
             UNIT_COLOR,
             DrawTextureParams {
-                dest_size: Some(Vec2::new(UNIT_SIZE.x, UNIT_SIZE.y)),
+                dest_size: Some(Vec2::new(UNIT_SIZE * d, UNIT_SIZE)),
                 rotation: self.rotation - f32::to_radians(90.),
                 ..Default::default()
             }

@@ -12,10 +12,10 @@ impl DarkGrayRectangle {
     pub fn new() -> Self {
         Self {
             rect: Rect::new(
-                screen_width() * 0.5 - UNIT_SIZE.x * 0.5,
-                screen_height() * 0.5 - UNIT_SIZE.y * 0.5,
-                UNIT_SIZE.x,
-                UNIT_SIZE.y,
+                screen_width() * 0.5 - UNIT_SIZE * 0.5,
+                screen_height() * 0.5 - UNIT_SIZE * 0.5,
+                UNIT_SIZE,
+                UNIT_SIZE,
             ),
             d: Vec2::new(0., 0.),
             zoom: 1.,

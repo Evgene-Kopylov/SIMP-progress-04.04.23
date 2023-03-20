@@ -8,7 +8,7 @@ pub const GROUND_COLOR: Color = GRAY;
 pub const UNIT_COLOR: Color = DARKGRAY;
 pub const SELECTOR_COLOR: Color = YELLOW;
 // pub const UNIT_SIZE: (f32, f32) = (60.0, 75.0);
-pub const UNIT_SIZE: Vec2 = Vec2::new(40., 40.);
+pub const UNIT_SIZE: f32 = 40.;
 
 pub const UNIT_SPEED: f32 = 130.0;
 pub const UNIT_ROTATION_SPEED: f32 = 4.0;
