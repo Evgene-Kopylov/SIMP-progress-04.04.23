@@ -14,7 +14,7 @@ body
     width:75px;
     height:75px;
     background:transparent;
-    border:3px solid #1e1e1e;
+    border:3px solid rgb(64, 64, 64);
     border-radius:50%;
     text-align:center;
     line-height:150px;
