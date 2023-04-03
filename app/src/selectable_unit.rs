@@ -7,6 +7,7 @@ pub(crate) struct SelectableUnit {
     rotation: f32,
     order: Vec<Vec2>,
     pub(crate) selected: bool,
+    texture: Texture2D,
 }
 
 pub(crate) struct SelectorFrame {
@@ -72,7 +73,7 @@ impl SelectorFrame {
 }
 
 impl SelectableUnit {
-    pub fn new() -> Self {
+    pub fn new(texture: Texture2D) -> Self {
         Self {
             collision: Circle::new(
                 screen_width() * 0.5,
@@ -82,6 +83,7 @@ impl SelectableUnit {
             rotation: f32::to_radians(90.0),
             order: Vec::new(),
             selected: false,
+            texture,
         }
     }
 
@@ -204,10 +206,10 @@ impl SelectableUnit {
         }
     }
 
-    pub fn draw(&self, texture: Texture2D) {
+    pub fn draw(&self) {
         let d = 0.8; // соотношение сторон
         draw_texture_ex(
-            texture,
+            self.texture,
             self.collision.x - UNIT_SIZE * d * 0.5,
             self.collision.y - UNIT_SIZE * 0.5,
             UNIT_COLOR,
