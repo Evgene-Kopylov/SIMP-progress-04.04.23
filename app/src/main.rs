@@ -44,7 +44,7 @@ async fn main() {
         // --------------------------------
 
         let mouse_position: Vec2 = mouse_position().into();
-        selectable_unit.update(dt);
+        selectable_unit.update(dt, camera_move, zoom);
 
         if selectable_unit.selected {
             selectable_unit.draw_collision();

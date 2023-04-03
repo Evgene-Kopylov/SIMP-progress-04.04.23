@@ -8,6 +8,8 @@ pub(crate) struct SelectableUnit {
     order: Vec<Vec2>,
     pub(crate) selected: bool,
     texture: Texture2D,
+    d: Vec2,
+    zoom: f32,
 }
 
 pub(crate) struct SelectorFrame {
@@ -84,10 +86,14 @@ impl SelectableUnit {
             order: Vec::new(),
             selected: false,
             texture,
+            d: Vec2::new(0., 0.),
+            zoom: 1.,
         }
     }
 
-    pub fn update(&mut self, dt: f32) {
+    pub fn update(&mut self, dt: f32, d: Vec2, zoom: f32) {
+        self.d = d;
+        self.zoom = zoom;
         // указание цели мышкой
         if self.selected && is_mouse_button_released(MouseButton::Right) {
             if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::LeftControl) {
@@ -164,9 +170,9 @@ impl SelectableUnit {
 
     pub fn draw_collision(&self) {
         draw_circle_lines(
-            self.collision.x,
-            self.collision.y,
-            self.collision.r,
+            self.collision.x * self.zoom + self.d.x,
+            self.collision.y * self.zoom + self.d.y,
+            self.collision.r * self.zoom,
             1.,
             BLUE
         )
@@ -210,11 +216,13 @@ impl SelectableUnit {
         let d = 0.8; // соотношение сторон
         draw_texture_ex(
             self.texture,
-            self.collision.x - UNIT_SIZE * d * 0.5,
-            self.collision.y - UNIT_SIZE * 0.5,
+            (self.collision.x - UNIT_SIZE * d * 0.5) * self.zoom + self.d.x,
+            (self.collision.y - UNIT_SIZE * 0.5) * self.zoom + self.d.y,
             UNIT_COLOR,
             DrawTextureParams {
-                dest_size: Some(Vec2::new(UNIT_SIZE * d, UNIT_SIZE)),
+                dest_size: Some(Vec2::new((
+                                  UNIT_SIZE * d) * self.zoom,
+                               UNIT_SIZE * self.zoom)),
                 rotation: self.rotation - f32::to_radians(90.),
                 ..Default::default()
             }
