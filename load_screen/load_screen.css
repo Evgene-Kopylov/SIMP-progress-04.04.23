@@ -14,7 +14,7 @@ body
     width:75px;
     height:75px;
     background:transparent;
-    border:3px solid #3c3c3c;
+    border:3px solid #1e1e1e;
     border-radius:50%;
     text-align:center;
     line-height:150px;
@@ -24,7 +24,7 @@ body
     letter-spacing:4px;
     text-transform:uppercase;
     text-shadow:0 0 10px #cecece;
-    box-shadow:0 0 20px rgba(0,0,0,.5);
+    /*box-shadow:0 0 20px rgba(0,0,0,.5);*/
 }
 .ring:before
 {
@@ -38,7 +38,7 @@ body
     border-top:3px solid #cecece;
     border-right:3px solid #cecece;
     border-radius:50%;
-    animation:animateC 2s linear infinite;
+    animation:animateC 7s linear infinite;
 }
 span
 {
@@ -50,7 +50,7 @@ span
     height:4px;
     background:transparent;
     transform-origin:left;
-    animation:animate 5s linear infinite;
+    animation:animate 3s linear infinite;
 }
 span:before
 {
@@ -62,7 +62,7 @@ span:before
     background: #cecece;
     top:-6px;
     right:-8px;
-    box-shadow:0 0 20px #cecece;
+    /*box-shadow:0 0 20px #cecece;*/
 }
 @keyframes animateC
 {
