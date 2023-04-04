@@ -72,9 +72,7 @@ impl SelectorFrame {
                 unit.selected = true;
             }
         }
-
     }
-
 }
 
 

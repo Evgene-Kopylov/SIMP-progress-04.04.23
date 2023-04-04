@@ -30,7 +30,7 @@ pub trait UI {
         )
     }
 
-    /// deform - соотношение сторон
+    /// deform - соотношение сторон - ширина к длинне
     fn draw_texture(&self, deform: f32) {
         let d = deform;
         draw_texture_ex(
