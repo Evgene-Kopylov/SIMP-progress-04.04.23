@@ -16,8 +16,8 @@ use crate::selectable_unit::SelectorFrame;
 #[macroquad::main("breakout")]
 async fn main() {
     let mut camera = Camera::start();
-    let mut dark_gray_rectangle = DarkGrayRectangle::new();
     let texture: Texture2D = load_texture("../assets/path3333.png").await.unwrap();
+    let mut dark_gray_rectangle = DarkGrayRectangle::new(texture);
     let mut selectable_unit = SelectableUnit::new(texture);
     let mut selector_frame = SelectorFrame::new();
 
@@ -42,10 +42,10 @@ async fn main() {
         let mouse_position: Vec2 = mouse_position().into();
         selectable_unit.update(dt, camera_move, zoom);
 
-        if selectable_unit.selected {
-            selectable_unit.draw_collision();
-            selectable_unit.draw_path(dt)
-        }
+        // if selectable_unit.selected {
+        //     // selectable_unit.draw_circle_collision();
+        //     selectable_unit.draw_path()
+        // }
 
         selector_frame.update(mouse_position, &mut selectable_unit);
         selectable_unit.draw();

@@ -13,6 +13,7 @@ pub(crate) struct SelectableUnit {
     d: Vec2,
     zoom: f32,
     size: f32,
+    dt: f32,
 }
 
 pub(crate) struct SelectorFrame {
@@ -84,6 +85,8 @@ impl UI for SelectableUnit {
     fn d(&self) -> Vec2 { self.d }
     fn size(&self) -> f32 { self.size }
     fn unit_color(&self) -> Color { UNIT_COLOR }
+    fn texture(&self) -> Texture2D { self.texture }
+    fn rotation(&self) -> f32 { self.rotation }
 }
 
 
@@ -94,21 +97,19 @@ impl SelectableUnit {
                 screen_width() * 0.5,
                 screen_height() * 0.5,
             ),
-            // collision: Circle::new(
-            //
-            //     UNIT_SIZE / 2.
-            // ),
+            zoom: 1.,
+            d: Vec2::new(0., 0.),
+            size: UNIT_SIZE,
+            texture,
             rotation: f32::to_radians(90.0),
             order: Vec::new(),
             selected: false,
-            texture,
-            d: Vec2::new(0., 0.),
-            zoom: 1.,
-            size: UNIT_SIZE,
+            dt: get_frame_time(),
         }
     }
 
     pub fn update(&mut self, dt: f32, d: Vec2, zoom: f32) {
+        self.dt = dt;
         self.d = d;
         self.zoom = zoom;
         // указание цели мышкой
@@ -172,17 +173,8 @@ impl SelectableUnit {
         }
     }
 
-    pub fn draw_collision(&self) {
-        draw_circle_lines(
-            self.pos.x * self.zoom + self.d.x,
-            self.pos.y * self.zoom + self.d.y,
-            self.size / 2. * self.zoom,
-            1.,
-            BLUE
-        )
-    }
-
-    pub fn draw_path(&self, dt: f32) {
+    pub fn draw_path(&self) {
+        let dt = self.dt;
         let mut eta: f32 = 0.0;
         for i in 0..self.order.len() {
             let x1;
@@ -219,20 +211,13 @@ impl SelectableUnit {
     }
 
     pub fn draw(&self) {
-        let d = 0.8; // соотношение сторон
-        draw_texture_ex(
-            self.texture,
-            (self.pos.x - UNIT_SIZE * d * 0.5) * self.zoom + self.d.x,
-            (self.pos.y - UNIT_SIZE * 0.5) * self.zoom + self.d.y,
-            UNIT_COLOR,
-            DrawTextureParams {
-                dest_size: Some(Vec2::new((
-                                  UNIT_SIZE * d) * self.zoom,
-                               UNIT_SIZE * self.zoom)),
-                rotation: self.rotation - f32::to_radians(90.),
-                ..Default::default()
-            }
-        );
+        if self.selected {
+            self.draw_path();
+        }
+        self.draw_texture(0.9);
+        if self.selected {
+            self.draw_circle_collision();
+        }
     }
 }
 
