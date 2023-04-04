@@ -96,12 +96,10 @@ impl SelectableUnit {
         self.zoom = zoom;
         // указание цели мышкой
         if self.selected && is_mouse_button_released(MouseButton::Right) {
-            if is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::LeftControl) {
-                self.order.push(mouse_position().into());
-            } else {
+            if !is_key_down(KeyCode::LeftShift) && !is_key_down(KeyCode::LeftControl) {
                 self.order.clear();
-                self.order.push(mouse_position().into());
             }
+            self.order.push(mouse_position().into());
         }
 
         let mut y_move = -1f32;
