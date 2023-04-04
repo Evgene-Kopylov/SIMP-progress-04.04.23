@@ -3,20 +3,38 @@ use macroquad::prelude::*;
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 
 pub struct DarkGrayRectangle {
-    rect: Rect,
+    pos: Vec2,
+    // rect: Rect,
+    size: f32,
     d: Vec2,
     zoom: f32,
+}
+
+pub trait UI {
+    fn visible_coords(&self) -> Vec2;
+    fn visible_size(&self) -> f32;
+}
+
+impl UI for DarkGrayRectangle {
+    fn visible_coords(&self) -> Vec2 {
+        Vec2::new(
+            self.pos.x * self.zoom + self.d.x,
+            self.pos.y * self.zoom + self.d.y,
+        )
+    }
+    fn visible_size(&self) -> f32 {
+        self.size * self.zoom
+    }
 }
 
 impl DarkGrayRectangle {
     pub fn new() -> Self {
         Self {
-            rect: Rect::new(
+            pos: Vec2::new(
                 screen_width() * 0.5 - UNIT_SIZE * 0.5,
                 screen_height() * 0.5 - UNIT_SIZE * 0.5,
-                UNIT_SIZE,
-                UNIT_SIZE,
             ),
+            size: UNIT_SIZE,
             d: Vec2::new(0., 0.),
             zoom: 1.,
         }
@@ -46,25 +64,29 @@ impl DarkGrayRectangle {
             keycode = "Down"
         }
 
-        if self.rect.x < 1f32 {
+        if self.pos.x < 1f32 {
             x_move = 1f32;
         }
 
-        if self.rect.y < 1f32 {
+        if self.pos.y < 1f32 {
             y_move = 1f32;
         }
 
-        self.rect.x += x_move * dt * UNIT_SPEED;
-        self.rect.y += y_move * dt * UNIT_SPEED;
+        self.pos.x += x_move * dt * self.size;
+        self.pos.y += y_move * dt * self.size;
         keycode
     }
 
     pub fn draw(&self) {
+
+        let visible_pos = self.visible_coords();
+        let visible_size = self.visible_size();
+
         draw_rectangle(
-            self.rect.x * self.zoom + self.d.x,
-            self.rect.y * self.zoom + self.d.y,
-            self.rect.w * self.zoom,
-            self.rect.h * self.zoom,
+            visible_pos.x,
+            visible_pos.y,
+            visible_size,
+            visible_size,
             UNIT_COLOR
         );
     }

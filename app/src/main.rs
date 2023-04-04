@@ -11,11 +11,6 @@ use crate::selectable_unit::SelectableUnit;
 use crate::selectable_unit::SelectorFrame;
 
 
-trait CameraMove {
-
-}
-
-
 
 #[macroquad::main("breakout")]
 async fn main() {
