@@ -60,15 +60,15 @@ impl SelectorFrame {
             }
         }
 
-        // // одиночный клик
-        // if is_mouse_button_pressed(MouseButton::Left) {
-        //     if
-        //     (mouse_position.x - unit.collision.x).powf(2f32) +
-        //         (mouse_position.y - unit.collision.y).powf(2f32) < (UNIT_SIZE / 2.).powf(2f32)
-        //     {
-        //         unit.selected = true;
-        //     }
-        // }
+        // одиночный клик
+        if is_mouse_button_pressed(MouseButton::Left) {
+            if
+            (mouse_position.x - (unit.collision.x * unit.zoom + unit.d.x)).powf(2f32) +
+                (mouse_position.y - (unit.collision.y * unit.zoom + unit.d.y)).powf(2f32) < (UNIT_SIZE * unit.zoom / 2.).powf(2f32)
+            {
+                unit.selected = true;
+            }
+        }
 
     }
 
