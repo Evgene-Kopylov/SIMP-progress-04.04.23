@@ -191,25 +191,27 @@ impl SelectableUnit {
                 x1 = self.order[i-1].x;
                 y1 = self.order[i-1].y;
             }
+            let x2 = self.order[i].x;
+            let y2 = self.order[i].y;
             draw_line(
-                x1,
-                y1,
-                self.order[i].x,
-                self.order[i].y,
+                x1 + self.d.x,
+                y1 + self.d.y,
+                x2 + self.d.x,
+                y2 + self.d.y,
                 1f32,
                 BLUE,
             );
-            let dx = x1 - self.order[i].x;
-            let dy = y1 - self.order[i].y;
-
-            eta += (dx.powf(2.) + dy.powf(2.)).sqrt() * dt / UNIT_SPEED * 200.0;
-            draw_text(
-                format!("ETA: {:.1}", eta).as_str(),
-                self.order[i].x - 12.,
-                self.order[i].y - 5.,
-                18.,
-                BLACK
-            );
+            // let dx = x1 - self.order[i].x;
+            // let dy = y1 - self.order[i].y;
+            //
+            // eta += (dx.powf(2.) + dy.powf(2.)).sqrt() * dt / UNIT_SPEED * 200.0;
+            // draw_text(
+            //     format!("ETA: {:.1}", eta).as_str(),
+            //     self.order[i].x - 12.,
+            //     self.order[i].y - 5.,
+            //     18.,
+            //     BLACK
+            // );
         }
     }
 
