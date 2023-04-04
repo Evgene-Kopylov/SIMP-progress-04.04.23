@@ -4,13 +4,13 @@ mod camera;
 mod dark_grey_rectangle;
 mod selectable_unit;
 mod ui;
+mod selector_frame;
 
 use crate::settings::{GROUND_COLOR, UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 use crate::camera::Camera;
 use crate::dark_grey_rectangle::DarkGrayRectangle;
 use crate::selectable_unit::SelectableUnit;
-use crate::selectable_unit::SelectorFrame;
-
+use crate::selector_frame::SelectorFrame;
 
 
 #[macroquad::main("breakout")]
