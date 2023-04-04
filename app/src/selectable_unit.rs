@@ -51,10 +51,10 @@ impl SelectorFrame {
         // выделение области
         if is_mouse_button_released(MouseButton::Left) {
             if
-            unit.collision.x < self.point1.x.max(self.point2.x) &&
-                unit.collision.x > self.point1.x.min(self.point2.x) &&
-                unit.collision.y < self.point1.y.max(self.point2.y) &&
-                unit.collision.y > self.point1.y.min(self.point2.y)
+            unit.collision.x + unit.d.x < self.point1.x.max(self.point2.x) &&
+                unit.collision.x + unit.d.x > self.point1.x.min(self.point2.x) &&
+                unit.collision.y + unit.d.y < self.point1.y.max(self.point2.y) &&
+                unit.collision.y + unit.d.y > self.point1.y.min(self.point2.y)
             {
                 unit.selected = true;
             }
@@ -185,8 +185,8 @@ impl SelectableUnit {
             let x1;
             let y1;
             if i == 0 {
-                x1 = self.collision.x;
-                y1 = self.collision.y;
+                x1 = self.collision.x * self.zoom;
+                y1 = self.collision.y * self.zoom;
             } else {
                 x1 = self.order[i-1].x;
                 y1 = self.order[i-1].y;
