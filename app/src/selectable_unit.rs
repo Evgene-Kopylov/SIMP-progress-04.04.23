@@ -60,15 +60,15 @@ impl SelectorFrame {
             }
         }
 
-        // одиночный клик
-        if is_mouse_button_pressed(MouseButton::Left) {
-            if
-            (mouse_position.x - unit.collision.x).powf(2f32) +
-                (mouse_position.y - unit.collision.y).powf(2f32) < (UNIT_SIZE / 2.).powf(2f32)
-            {
-                unit.selected = true;
-            }
-        }
+        // // одиночный клик
+        // if is_mouse_button_pressed(MouseButton::Left) {
+        //     if
+        //     (mouse_position.x - unit.collision.x).powf(2f32) +
+        //         (mouse_position.y - unit.collision.y).powf(2f32) < (UNIT_SIZE / 2.).powf(2f32)
+        //     {
+        //         unit.selected = true;
+        //     }
+        // }
 
     }
 
@@ -100,8 +100,8 @@ impl SelectableUnit {
                 self.order.clear();
             }
             self.order.push((
-                mouse_position().0 - self.d.x,
-                mouse_position().1 - self.d.y,
+                (mouse_position().0 - self.d.x) / self.zoom,
+                (mouse_position().1 - self.d.y) / self.zoom,
             ).into());
         }
 
