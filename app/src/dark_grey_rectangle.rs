@@ -13,14 +13,17 @@ pub struct DarkGrayRectangle {
 
 
 impl UI for DarkGrayRectangle {
-    fn visible_coords(&self) -> Vec2 {
-        Vec2::new(
-            self.pos.x * self.zoom + self.d.x,
-            self.pos.y * self.zoom + self.d.y,
-        )
+    fn pos(&self) -> Vec2 {
+        self.pos
     }
-    fn visible_size(&self) -> f32 {
-        self.size * self.zoom
+    fn zoom(&self) -> f32 {
+        self.zoom
+    }
+    fn d(&self) -> Vec2 {
+        self.d
+    }
+    fn size(&self) -> f32 {
+        self.size
     }
 }
 
