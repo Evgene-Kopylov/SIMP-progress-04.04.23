@@ -13,18 +13,11 @@ pub struct DarkGrayRectangle {
 
 
 impl UI for DarkGrayRectangle {
-    fn pos(&self) -> Vec2 {
-        self.pos
-    }
-    fn zoom(&self) -> f32 {
-        self.zoom
-    }
-    fn d(&self) -> Vec2 {
-        self.d
-    }
-    fn size(&self) -> f32 {
-        self.size
-    }
+    fn pos(&self) -> Vec2 { self.pos }
+    fn zoom(&self) -> f32 { self.zoom }
+    fn d(&self) -> Vec2 { self.d }
+    fn size(&self) -> f32 { self.size }
+    fn unit_color(&self) -> Color { UNIT_COLOR }
 }
 
 
@@ -88,7 +81,7 @@ impl DarkGrayRectangle {
             visible_pos.y,
             visible_size,
             visible_size,
-            UNIT_COLOR
+            self.unit_color()
         );
     }
 }

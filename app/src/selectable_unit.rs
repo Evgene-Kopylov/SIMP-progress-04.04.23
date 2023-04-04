@@ -1,15 +1,18 @@
 use macroquad::prelude::*;
 use crate::settings::{SELECTOR_COLOR, UNIT_ROTATION_SPEED};
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
+use crate::ui::UI;
 
 pub(crate) struct SelectableUnit {
-    collision: Circle,
+    pos: Vec2,
+    // collision: Circle,
     rotation: f32,
     order: Vec<Vec2>,
     pub(crate) selected: bool,
     texture: Texture2D,
     d: Vec2,
     zoom: f32,
+    size: f32,
 }
 
 pub(crate) struct SelectorFrame {
@@ -51,10 +54,10 @@ impl SelectorFrame {
         // выделение области
         if is_mouse_button_released(MouseButton::Left) {
             if
-            (unit.collision.x * unit.zoom + unit.d.x) < self.point1.x.max(self.point2.x) &&
-                (unit.collision.x * unit.zoom + unit.d.x) > self.point1.x.min(self.point2.x) &&
-                (unit.collision.y * unit.zoom + unit.d.y) < self.point1.y.max(self.point2.y) &&
-                (unit.collision.y * unit.zoom + unit.d.y) > self.point1.y.min(self.point2.y)
+            (unit.pos.x * unit.zoom + unit.d.x) < self.point1.x.max(self.point2.x) &&
+                (unit.pos.x * unit.zoom + unit.d.x) > self.point1.x.min(self.point2.x) &&
+                (unit.pos.y * unit.zoom + unit.d.y) < self.point1.y.max(self.point2.y) &&
+                (unit.pos.y * unit.zoom + unit.d.y) > self.point1.y.min(self.point2.y)
             {
                 unit.selected = true;
             }
@@ -63,8 +66,8 @@ impl SelectorFrame {
         // одиночный клик
         if is_mouse_button_pressed(MouseButton::Left) {
             if
-            (mouse_position.x - (unit.collision.x * unit.zoom + unit.d.x)).powf(2f32) +
-                (mouse_position.y - (unit.collision.y * unit.zoom + unit.d.y)).powf(2f32) < (UNIT_SIZE * unit.zoom / 2.).powf(2f32)
+            (mouse_position.x - (unit.pos.x * unit.zoom + unit.d.x)).powf(2f32) +
+                (mouse_position.y - (unit.pos.y * unit.zoom + unit.d.y)).powf(2f32) < (UNIT_SIZE * unit.zoom / 2.).powf(2f32)
             {
                 unit.selected = true;
             }
@@ -74,20 +77,34 @@ impl SelectorFrame {
 
 }
 
+
+impl UI for SelectableUnit {
+    fn pos(&self) -> Vec2 { self.pos }
+    fn zoom(&self) -> f32 { self.zoom }
+    fn d(&self) -> Vec2 { self.d }
+    fn size(&self) -> f32 { self.size }
+    fn unit_color(&self) -> Color { UNIT_COLOR }
+}
+
+
 impl SelectableUnit {
     pub fn new(texture: Texture2D) -> Self {
         Self {
-            collision: Circle::new(
+            pos: Vec2::new(
                 screen_width() * 0.5,
                 screen_height() * 0.5,
-                UNIT_SIZE / 2.
             ),
+            // collision: Circle::new(
+            //
+            //     UNIT_SIZE / 2.
+            // ),
             rotation: f32::to_radians(90.0),
             order: Vec::new(),
             selected: false,
             texture,
             d: Vec2::new(0., 0.),
             zoom: 1.,
+            size: UNIT_SIZE,
         }
     }
 
@@ -113,27 +130,13 @@ impl SelectableUnit {
             y_move += 1f32;
         }
 
-        // // отталкиваться от краев карты
-        // if self.collision.y < 1f32 {
-        //     self.collision.y += 1f32;
-        // }
-        // if self.collision.y > screen_height() - UNIT_SIZE {
-        //     self.collision.y -= 1f32;
-        // }
-        // if self.collision.x < 1f32 {
-        //     self.collision.x += 1f32;
-        // }
-        // if self.collision.x > screen_width() - UNIT_SIZE {
-        //     self.collision.x -= 1f32;
-        // }
-
         // поворот юнита в сторону курсора
         if self.order.len() > 0 {
             self.rotation = self.rotation % f32::to_radians(360.);
-            let mut dx = self.collision.x - self.order[0].x;
+            let mut dx = self.pos.x - self.order[0].x;
             if dx == 0f32 { dx += 1f32; };
 
-            let mut dy = self.collision.y - self.order[0].y;
+            let mut dy = self.pos.y - self.order[0].y;
             if dy == 0f32 { dy += 1f32; };
 
             let a;
@@ -164,16 +167,16 @@ impl SelectableUnit {
                 }
             }
 
-            self.collision.x += y_move * dt * UNIT_SPEED * self.rotation.cos();
-            self.collision.y += y_move * dt * UNIT_SPEED * self.rotation.sin();
+            self.pos.x += y_move * dt * UNIT_SPEED * self.rotation.cos();
+            self.pos.y += y_move * dt * UNIT_SPEED * self.rotation.sin();
         }
     }
 
     pub fn draw_collision(&self) {
         draw_circle_lines(
-            self.collision.x * self.zoom + self.d.x,
-            self.collision.y * self.zoom + self.d.y,
-            self.collision.r * self.zoom,
+            self.pos.x * self.zoom + self.d.x,
+            self.pos.y * self.zoom + self.d.y,
+            self.size / 2. * self.zoom,
             1.,
             BLUE
         )
@@ -185,8 +188,8 @@ impl SelectableUnit {
             let x1;
             let y1;
             if i == 0 {
-                x1 = self.collision.x;
-                y1 = self.collision.y;
+                x1 = self.pos.x;
+                y1 = self.pos.y;
             } else {
                 x1 = self.order[i-1].x;
                 y1 = self.order[i-1].y;
@@ -219,8 +222,8 @@ impl SelectableUnit {
         let d = 0.8; // соотношение сторон
         draw_texture_ex(
             self.texture,
-            (self.collision.x - UNIT_SIZE * d * 0.5) * self.zoom + self.d.x,
-            (self.collision.y - UNIT_SIZE * 0.5) * self.zoom + self.d.y,
+            (self.pos.x - UNIT_SIZE * d * 0.5) * self.zoom + self.d.x,
+            (self.pos.y - UNIT_SIZE * 0.5) * self.zoom + self.d.y,
             UNIT_COLOR,
             DrawTextureParams {
                 dest_size: Some(Vec2::new((
