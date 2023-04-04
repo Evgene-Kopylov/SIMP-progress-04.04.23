@@ -5,7 +5,6 @@ use crate::ui::UI;
 
 pub(crate) struct SelectableUnit {
     pos: Vec2,
-    // collision: Circle,
     rotation: f32,
     order: Vec<Vec2>,
     pub(crate) selected: bool,

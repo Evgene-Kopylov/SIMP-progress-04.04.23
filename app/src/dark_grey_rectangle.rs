@@ -5,7 +5,6 @@ use crate::ui::UI;
 
 pub struct DarkGrayRectangle {
     pos: Vec2,
-    // rect: Rect,
     size: f32,
     d: Vec2,
     zoom: f32,
@@ -28,8 +27,8 @@ impl DarkGrayRectangle {
     pub fn new(texture: Texture2D) -> Self {
         Self {
             pos: Vec2::new(
-                screen_width() * 0.5 - UNIT_SIZE * 0.5,
-                screen_height() * 0.5 - UNIT_SIZE * 0.5,
+                screen_width() * 0.5 - UNIT_SIZE * 0.5 + 100.,
+                screen_height() * 0.5 - UNIT_SIZE * 0.5 + 130.,
             ),
             size: UNIT_SIZE,
             d: Vec2::new(0., 0.),
