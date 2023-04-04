@@ -1,5 +1,5 @@
 use macroquad::prelude::*;
-use crate::settings::{SELECTOR_COLOR, UNIT_ROTATION_SPEED};
+use crate::settings::{UNIT_ROTATION_SPEED};
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 use crate::ui::{UI, UnitWithTexture};
 

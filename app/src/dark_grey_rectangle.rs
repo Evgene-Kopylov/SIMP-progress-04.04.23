@@ -1,6 +1,6 @@
 use macroquad::prelude::*;
 
-use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
+use crate::{UNIT_COLOR, UNIT_SIZE};
 use crate::ui::UI;
 
 pub struct DarkGrayRectangle {
