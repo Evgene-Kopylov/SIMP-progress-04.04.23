@@ -51,10 +51,10 @@ impl SelectorFrame {
         // выделение области
         if is_mouse_button_released(MouseButton::Left) {
             if
-            unit.collision.x + unit.d.x < self.point1.x.max(self.point2.x) &&
-                unit.collision.x + unit.d.x > self.point1.x.min(self.point2.x) &&
-                unit.collision.y + unit.d.y < self.point1.y.max(self.point2.y) &&
-                unit.collision.y + unit.d.y > self.point1.y.min(self.point2.y)
+            (unit.collision.x * unit.zoom + unit.d.x) < self.point1.x.max(self.point2.x) &&
+                (unit.collision.x * unit.zoom + unit.d.x) > self.point1.x.min(self.point2.x) &&
+                (unit.collision.y * unit.zoom + unit.d.y) < self.point1.y.max(self.point2.y) &&
+                (unit.collision.y * unit.zoom + unit.d.y) > self.point1.y.min(self.point2.y)
             {
                 unit.selected = true;
             }
