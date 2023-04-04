@@ -185,8 +185,8 @@ impl SelectableUnit {
             let x1;
             let y1;
             if i == 0 {
-                x1 = self.collision.x * self.zoom;
-                y1 = self.collision.y * self.zoom;
+                x1 = self.collision.x;
+                y1 = self.collision.y;
             } else {
                 x1 = self.order[i-1].x;
                 y1 = self.order[i-1].y;
@@ -194,10 +194,10 @@ impl SelectableUnit {
             let x2 = self.order[i].x;
             let y2 = self.order[i].y;
             draw_line(
-                x1 + self.d.x,
-                y1 + self.d.y,
-                x2 + self.d.x,
-                y2 + self.d.y,
+                x1 * self.zoom + self.d.x,
+                y1 * self.zoom + self.d.y,
+                x2 * self.zoom + self.d.x,
+                y2 * self.zoom + self.d.y,
                 1f32,
                 BLUE,
             );
