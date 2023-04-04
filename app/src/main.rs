@@ -3,6 +3,7 @@ mod settings;
 mod camera;
 mod dark_grey_rectangle;
 mod selectable_unit;
+mod ui;
 
 use crate::settings::{GROUND_COLOR, UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
 use crate::camera::Camera;

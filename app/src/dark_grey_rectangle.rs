@@ -1,6 +1,7 @@
 use macroquad::prelude::*;
 
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
+use crate::ui::UI;
 
 pub struct DarkGrayRectangle {
     pos: Vec2,
@@ -10,10 +11,6 @@ pub struct DarkGrayRectangle {
     zoom: f32,
 }
 
-pub trait UI {
-    fn visible_coords(&self) -> Vec2;
-    fn visible_size(&self) -> f32;
-}
 
 impl UI for DarkGrayRectangle {
     fn visible_coords(&self) -> Vec2 {
@@ -26,6 +23,7 @@ impl UI for DarkGrayRectangle {
         self.size * self.zoom
     }
 }
+
 
 impl DarkGrayRectangle {
     pub fn new() -> Self {
