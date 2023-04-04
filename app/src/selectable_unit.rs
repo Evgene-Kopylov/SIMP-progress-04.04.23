@@ -99,7 +99,10 @@ impl SelectableUnit {
             if !is_key_down(KeyCode::LeftShift) && !is_key_down(KeyCode::LeftControl) {
                 self.order.clear();
             }
-            self.order.push(mouse_position().into());
+            self.order.push((
+                mouse_position().0 - self.d.x,
+                mouse_position().1 - self.d.y,
+            ).into());
         }
 
         let mut y_move = -1f32;
@@ -110,19 +113,19 @@ impl SelectableUnit {
             y_move += 1f32;
         }
 
-        // отталкиваться от краев карты
-        if self.collision.y < 1f32 {
-            self.collision.y += 1f32;
-        }
-        if self.collision.y > screen_height() - UNIT_SIZE {
-            self.collision.y -= 1f32;
-        }
-        if self.collision.x < 1f32 {
-            self.collision.x += 1f32;
-        }
-        if self.collision.x > screen_width() - UNIT_SIZE {
-            self.collision.x -= 1f32;
-        }
+        // // отталкиваться от краев карты
+        // if self.collision.y < 1f32 {
+        //     self.collision.y += 1f32;
+        // }
+        // if self.collision.y > screen_height() - UNIT_SIZE {
+        //     self.collision.y -= 1f32;
+        // }
+        // if self.collision.x < 1f32 {
+        //     self.collision.x += 1f32;
+        // }
+        // if self.collision.x > screen_width() - UNIT_SIZE {
+        //     self.collision.x -= 1f32;
+        // }
 
         // поворот юнита в сторону курсора
         if self.order.len() > 0 {
