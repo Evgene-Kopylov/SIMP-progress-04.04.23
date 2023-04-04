@@ -201,17 +201,17 @@ impl SelectableUnit {
                 1f32,
                 BLUE,
             );
-            // let dx = x1 - self.order[i].x;
-            // let dy = y1 - self.order[i].y;
-            //
-            // eta += (dx.powf(2.) + dy.powf(2.)).sqrt() * dt / UNIT_SPEED * 200.0;
-            // draw_text(
-            //     format!("ETA: {:.1}", eta).as_str(),
-            //     self.order[i].x - 12.,
-            //     self.order[i].y - 5.,
-            //     18.,
-            //     BLACK
-            // );
+            let dx = x1 - self.order[i].x;
+            let dy = y1 - self.order[i].y;
+
+            eta += (dx.powf(2.) + dy.powf(2.)).sqrt() * dt / UNIT_SPEED * 200.0;
+            draw_text(
+                format!("ETA: {:.1}", eta).as_str(),
+                self.order[i].x * self.zoom + self.d.x - 12.,
+                self.order[i].y * self.zoom + self.d.y - 5.,
+                18.,
+                BLACK
+            );
         }
     }
 
