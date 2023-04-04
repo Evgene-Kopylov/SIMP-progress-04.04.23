@@ -16,8 +16,8 @@ use crate::selectable_unit::SelectorFrame;
 #[macroquad::main("breakout")]
 async fn main() {
     let mut camera = Camera::start();
+    let mut dark_gray_rectangle = DarkGrayRectangle::new();
     let texture: Texture2D = load_texture("../assets/path3333.png").await.unwrap();
-    let mut dark_gray_rectangle = DarkGrayRectangle::new(texture);
     let mut selectable_unit = SelectableUnit::new(texture);
     let mut selector_frame = SelectorFrame::new();
 

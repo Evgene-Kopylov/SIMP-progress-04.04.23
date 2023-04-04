@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 use crate::settings::{SELECTOR_COLOR, UNIT_ROTATION_SPEED};
 use crate::{UNIT_COLOR, UNIT_SIZE, UNIT_SPEED};
-use crate::ui::UI;
+use crate::ui::{UI, UnitWithTexture};
 
 pub(crate) struct SelectableUnit {
     pos: Vec2,
@@ -82,8 +82,11 @@ impl UI for SelectableUnit {
     fn d(&self) -> Vec2 { self.d }
     fn size(&self) -> f32 { self.size }
     fn unit_color(&self) -> Color { UNIT_COLOR }
-    fn texture(&self) -> Texture2D { self.texture }
     fn rotation(&self) -> f32 { self.rotation }
+}
+
+impl UnitWithTexture for SelectableUnit {
+    fn texture(&self) -> Texture2D { self.texture }
 }
 
 

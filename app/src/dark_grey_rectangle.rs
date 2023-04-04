@@ -8,7 +8,6 @@ pub struct DarkGrayRectangle {
     size: f32,
     d: Vec2,
     zoom: f32,
-    texture: Texture2D,
 }
 
 
@@ -18,13 +17,12 @@ impl UI for DarkGrayRectangle {
     fn d(&self) -> Vec2 { self.d }
     fn size(&self) -> f32 { self.size }
     fn unit_color(&self) -> Color { UNIT_COLOR }
-    fn texture(&self) -> Texture2D { self.texture }
     fn rotation(&self) -> f32 { 0. }
 }
 
 
 impl DarkGrayRectangle {
-    pub fn new(texture: Texture2D) -> Self {
+    pub fn new() -> Self {
         Self {
             pos: Vec2::new(
                 screen_width() * 0.5 - UNIT_SIZE * 0.5 + 100.,
@@ -33,7 +31,6 @@ impl DarkGrayRectangle {
             size: UNIT_SIZE,
             d: Vec2::new(0., 0.),
             zoom: 1.,
-            texture,
         }
     }
 

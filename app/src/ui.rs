@@ -6,7 +6,6 @@ pub trait UI {
     fn d(&self) -> Vec2;
     fn size(&self) -> f32;
     fn unit_color(&self) -> Color;
-    fn texture(&self) -> Texture2D;
     fn rotation(&self) -> f32;
 
     fn visible_coords(&self) -> Vec2 {
@@ -29,6 +28,11 @@ pub trait UI {
             BLUE
         )
     }
+}
+
+
+pub trait UnitWithTexture: UI {
+    fn texture(&self) -> Texture2D;
 
     /// deform - соотношение сторон - ширина к длинне
     fn draw_texture(&self, deform: f32) {
