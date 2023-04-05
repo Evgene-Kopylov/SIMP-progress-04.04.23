@@ -20,7 +20,7 @@ impl UI for SelectableUnit {
     fn zoom(&self) -> f32 { self.zoom }
     fn d(&self) -> Vec2 { self.d }
     fn size(&self) -> f32 { self.size }
-    fn unit_color(&self) -> Color { UNIT_COLOR }
+    fn unit_color(&self) -> Color { Color::new(0.8, 0.3, 0.3, 1.00) }
     fn rotation(&self) -> f32 { self.rotation }
 }
 
