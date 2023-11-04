@@ -1,5 +1,9 @@
 # SIMP
 
+### Запуск
+Запуск локально через [index.html](index.html).
+
+[Живое демо](https://evgene-kopylov.github.io/) на странице автора.
 
 ### cargo watch + tests
 Отслеживать изменения и при сохранении запускать тесты.
